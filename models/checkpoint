@@ -1,0 +1,2 @@
+model_checkpoint_path: "blstm_tial1.h"
+all_model_checkpoint_paths: "blstm_tial1.h"
