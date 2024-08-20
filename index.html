@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Arabic Dialects Classifier</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+      <div class="container">
+        <a class="navbar-brand" href="../home.html"
+          >Practical Machine Deep Learning</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="../home.html"
+                >Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../about.html">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../contact.html">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h1 class="mt-5">Arabic Dialects Classifier</h1>
+          <ul class="list-unstyled">
+            <li>Yehia Elkasas</li>
+            <li>Gehad Ahmed</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 text-left">
+          <h2 class="mt-5">Problem Statement</h2>
+          <p>
+            Arabic, one of the world's most widely spoken languages, exhibits a
+            rich diversity of dialects across different regions in the Middle
+            East. These dialects often pose challenges in natural language
+            processing tasks such as speech recognition, sentiment analysis, and
+            machine translation. Understanding and classifying these dialects is
+            crucial for developing language technologies that can cater to the
+            linguistic nuances of various Arabic-speaking communities.
+            Therefore, the problem statement for this project is to build a
+            deep-learning model for Arabic dialects classification.
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 text-left">
+          <h2 class="mt-5">Dataset</h2>
+
+          <p>
+            Our chosen dataset, the Arabic Online Commentary Dataset, is a
+            remarkable collection of over 52 million words. It stands out as an
+            essential tool for research, especially in the study of dialects.
+            The dataset's uniqueness lies in the extensive and meticulous
+            annotation process. Each sentence undergoes detailed examination to
+            classify both the dialect level and the exact dialect it represents.
+            As of now, it has accurately annotated 108,000 sentences and a
+            significant portion, about 41%, of these sentences display unique
+            dialectal features.
+          </p>
+
+          <!-- Word Clouds Container -->
+          <p>
+            The word clouds below represent the most frequent terms in our
+            dataset, illustrating the linguistic characteristics unique to each
+            dialect class.
+          </p>
+          <div
+            class="word-clouds-container"
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-wrap: wrap;
+            "
+          >
+            <!-- Word Cloud for DIAL_GLF -->
+            <div class="img-container" style="text-align: center">
+              <img
+                src="resources/images/DIAL_GLF.png"
+                class="img-fluid"
+                alt="Word Cloud for Class DIAL_GLF"
+              />
+              <p>Word Cloud for Class DIAL_GLF</p>
+            </div>
+
+            <!-- Word Cloud for DIAL_EGY -->
+            <div class="img-container" style="text-align: center">
+              <img
+                src="resources/images/DIAL_EGY.png"
+                class="img-fluid"
+                alt="Word Cloud for Class DIAL_EGY"
+              />
+              <p>Word Cloud for Class DIAL_EGY</p>
+            </div>
+
+            <!-- Word Cloud for DIAL_LEV -->
+            <div class="img-container" style="text-align: center">
+              <img
+                src="resources/images/DIAL_LEV.png"
+                class="img-fluid"
+                alt="Word Cloud for Class DIAL_LEV"
+              />
+              <p>Word Cloud for Class DIAL_LEV</p>
+            </div>
+
+            <!-- Word Cloud for MSA -->
+            <div class="img-container" style="text-align: center">
+              <img
+                src="resources/images/MSA.png"
+                class="img-fluid"
+                alt="Word Cloud for Class MSA"
+              />
+              <p>Word Cloud for Class MSA</p>
+            </div>
+          </div>
+
+          <div
+            class="dataset-class-representation-container"
+            style="
+              text-align: center;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-wrap: wrap;
+            "
+          >
+            <p style="text-align: left; width: 100%">
+              These images display the class distribution in our dataset before
+              and after applying data augmentation techniques. The augmentation
+              process aimed to balance the class distribution, enhancing the
+              model's ability to generalize across different dialects.
+            </p>
+
+            <div style="display: flex; justify-content: center; gap: 20px">
+              <!-- Before Augmentation -->
+              <div class="img-container" style="text-align: center">
+                <img
+                  src="resources/images/dataset_classes.png"
+                  class="img-fluid"
+                  alt="Dataset Before Augmentation"
+                />
+                <p>Dataset Before Augmentation</p>
+              </div>
+
+              <!-- After Augmentation -->
+              <div class="img-container" style="text-align: center">
+                <img
+                  src="resources/images/dataset_classes_augmented.png"
+                  class="img-fluid"
+                  alt="Dataset After Augmentation"
+                />
+                <p>Dataset After Augmentation</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 text-left">
+          <h2 class="mt-5">Input/Output Examples</h2>
+
+          <p>
+            Place few examples here to illustrate the dataset and your problem
+            statement, add your model images below
+          </p>
+
+          <div
+            class="sentences-container"
+            style="
+              display: flex;
+              justify-content: space-around;
+              flex-wrap: wrap;
+            "
+          >
+            <div
+              style="
+                padding: 20px;
+                margin: 20px;
+                border-radius: 10px;
+                border: 2px solid #ccc;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+              "
+            >
+              <p>Input Sentence: "وين الكلام ذا"</p>
+              <p>Output: "DIAL_GLF"</p>
+            </div>
+
+            <div
+              style="
+                padding: 20px;
+                margin: 20px;
+                border-radius: 10px;
+                border: 2px solid #ccc;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+              "
+            >
+              <p>Input Sentence: "من أمن العقوبة أساء الأدب"</p>
+              <p>Output: "MSA"</p>
+            </div>
+
+            <div
+              style="
+                padding: 20px;
+                margin: 20px;
+                border-radius: 10px;
+                border: 2px solid #ccc;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+              "
+            >
+              <p>
+                Input Sentence: "كل واحد يشوف حاجة ما يشوفش منها غير اللي عايزة"
+              </p>
+              <p>Output: "DIAL_EGY"</p>
+            </div>
+
+            <div
+              style="
+                padding: 20px;
+                margin: 20px;
+                border-radius: 10px;
+                border: 2px solid #ccc;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+              "
+            >
+              <p>
+                Input Sentence: "يا خون مابصير تحكموعلى الناس منغير ما تشوفو"
+              </p>
+              <p>Output: "DIAL_LEV"</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 text-left">
+          <h2 class="mt-5">State of the art</h2>
+
+          <p>
+            State here state of the art models and their accuracies, you might
+            need to do this by including images of tables
+          </p>
+
+          <table style="width: 100%; border-collapse: collapse">
+            <tr style="border-bottom: 1px solid black">
+              <th>Model</th>
+              <th>Accuracy</th>
+            </tr>
+            <tr>
+              <td>CNN (Kim, 2014)</td>
+              <td>64.17%</td>
+            </tr>
+            <tr>
+              <td>CNN (Elaraby, 2018)</td>
+              <td>75.21%</td>
+            </tr>
+            <tr>
+              <td>
+                CNN [Different Dataset, Text Classification] (ElHachimi, 2019)
+              </td>
+              <td>94.54%</td>
+            </tr>
+            <tr>
+              <td>LSTM (Elaraby, 2018)</td>
+              <td>82.42%</td>
+            </tr>
+            <tr>
+              <td>
+                LSTM [Different Dataset, Text Classification] (ElHachimi, 2019)
+              </td>
+              <td>94.57%</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 text-left">
+          <h2 class="mt-5">Original Model from Literature</h2>
+          <h3 class="mt-5">Model A, (Elaraby, 2018)</h3>
+          <p>
+            This is our primary base models which utilize the AOC dataset for Arabic dialect
+            classification. The CNN architecture is designed for extracting
+            spatial hierarchies from the data, while the LSTM architecture
+            captures long-term dependencies.
+          </p>
+
+          <!-- CNN Architecture Image -->
+          <div class="row">
+            <div class="col-md-6 text-center">
+              <div class="img-container" align="center">
+                <img
+                  src="resources/images/Base1_CNN_model_architecture.png"
+                  class="img-fluid"
+                  alt="CNN Architecture"
+                  style="max-width: 80%;"
+                />
+                <p>CNN Architecture</p>
+              </div>
+            </div>
+            <div class="col-md-6 text-center">
+              <div class="img-container" align="center">
+                <img
+                  src="resources/images/Base1_LSTM_model_architecture.png"
+                  class="img-fluid"
+                  alt="LSTM Architecture"
+                  style="max-width: 80%;"
+                />
+                <p>LSTM Architecture</p>
+              </div>
+            </div>
+          </div>
+          <h3 class="mt-5">Model B Adapted for Comparison, (ElHachimi, 2019)</h3>
+          <p>
+            This model is known for its high accuracy in text classification. We
+            adapted and tested this model on our dataset to evaluate its
+            performance in the context of Arabic dialect classification.
+          </p>
+
+          <div class="row" style="align-items: center;">
+            <div class="col-md-6 text-center">
+              <div class="img-container" align="center">
+                <img
+                  src="resources/images/Base2_CNN_model_architecture.png"
+                  class="img-fluid"
+                  alt="CNN Architecture"
+                  style="max-width: 80%;"
+                />
+                <p>CNN Architecture</p>
+              </div>
+            </div>
+            <div class="col-md-6 text-center">
+              <div class="img-container" align="center">
+                <img
+                  src="resources/images/Base2_LSTM_model_architecture.png"
+                  class="img-fluid"
+                  alt="LSTM Architecture"
+                  style="max-width: 80%;"
+                />
+                <p>LSTM Architecture</p>
+              </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 text-left">
+          <h2 class="mt-5">Proposed Updates</h2>
+
+          <h5 class="mt-5">Update #1: Different Embedding Models</h5>
+          <p>
+            We used different embedding models, and initial
+            results have increased specially when using the CBOW (Continuous Bag
+            of Words) embedding pre-trained model.
+          </p>
+
+          <h5 class="mt-5">Update #2: Data Augmentation</h5>
+          <p>
+            We used different data augmentation techniques to balance the class distribution in our dataset. 
+            The augmentation process aimed to enhance the model's ability to generalize across different dialects.
+            
+          </p>
+          <p>The augmentation techniques used include:</p>
+          <ul>
+            <li>N-grams</li>
+            <li>Random deletion</li>
+            <li>Random swap</li>
+          </ul>
+          <h5 class="mt-5">Update #3: Attention Techniques</h5>
+          <p>
+            We used different attention techniques to enhance the model's ability to 
+            capture the most important features in the input sentence.
+            The attention techniques used are: Self Attention and Bahdanau Attention.
+          </p>
+          <p>The attention techniques used are:</p>
+          <ul>
+            <li>Self Attention</li>
+            <li>Bahdanau Attention</li>
+          </ul>
+
+          <h5 class="mt-5">Update #4: Tuning and different regularizations</h5>
+          <p>
+            We worked on the hyperparameters tuning and used different regularizers to enhance the model's accuracy.
+          </p>
+          <p>The regularizers used are:</p>
+          <ul>
+            <li>Dropout</li>
+            <li>L1</li>
+            <li>L2</li>
+          </ul>
+
+          <h5 class="mt-5">Update #5: Data Preprocessing</h5>
+          <p>
+            We used different data preprocessing techniques to enhance the model's accuracy, like Camel Normalization.
+          </p>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 text-left">
+          <h2 class="mt-5">Results</h2>
+          <p>Below are the comparative results of our models with the application of CBOW embedding, attention mechanisms, and
+            data augmentation techniques. These strategies have been utilized to refine the models' performance, aiming to
+            achieve or surpass the state-of-the-art results.</p>
+      
+          <!-- Results for Model A -->
+          <h3>Model A Results</h3>
+          <!-- <p>Model A implements CBOW embedding and attention with augmentation to improve upon the baseline model.</p> -->
+
+          <!-- CNN Results for Model A -->
+          <div class="row">
+            <div class="col-md-4 img-container text-center">
+              <img src="resources/images/CNN1 Initial.jpeg" class="img-fluid" alt="Model A, CNN Initial Results" />
+              <p>CNN Initial</p>
+            </div>
+            <div class="col-md-4 img-container text-center">
+              <img src="resources/images/CNN1 Cbow.jpeg" class="img-fluid" alt="Model A, CNN with CBOW Embedding" />
+              <p>CNN with CBOW Embedding</p>
+            </div>
+            <div class="col-md-4 img-container text-center">
+              <img src="resources/images/CNN1 Attention.jpeg" class="img-fluid" alt="Model A, CNN with Attention" />
+              <p>CNN with Attention</p>
+            </div>
+          </div>
+
+          <!-- LSTM Results for Model A -->
+          <div class="row">
+            <div class="col-md-4 img-container text-center">
+              <img src="resources/images/LSTM1 Initial.jpeg" class="img-fluid" alt="Model A, LSTM Initial Results" />
+              <p>LSTM Initial</p>
+            </div>
+            <div class="col-md-4 img-container text-center">
+              <img src="resources/images/LSTM1 Cbow.jpeg" class="img-fluid" alt="Model A, LSTM with CBOW Embedding" />
+              <p>LSTM with CBOW Embedding</p>
+            </div>
+            <div class="col-md-4 img-container text-center">
+              <img src="resources/images/LSTM1 camel n.jpeg" class="img-fluid" alt="Model A, LSTM with Camel Normalization" />
+              <p>LSTM with Camel Normalization</p>
+            </div>
+          </div>
+
+          <!-- Results for Model B -->
+          <h3>Model B Results</h3>
+          <!-- <p>Model B builds on the concept with enhanced attention layers and sophisticated augmentation techniques, showing -->
+            <!-- notable improvements in benchmarks.</p> -->
+
+          <!-- CNN Results for Model B -->
+          <div class="row">
+            <div class="col-md-6 img-container text-center">
+              <img src="resources/images/CNN2 cbow.jpeg" class="img-fluid" alt="Model B, CNN with CBOW Embedding" />
+              <p>CNN with CBOW Embedding</p>
+            </div>
+            <div class="col-md-6 img-container text-center">
+              <img src="resources/images/CNN2 augmentation.jpeg" class="img-fluid" alt="Model B, CNN with Data Augmentation" />
+              <p>CNN with Data Augmentation</p>
+            </div>
+          </div>
+
+          <!-- LSTM Results for Model B -->
+          <div class="row">
+            <div class="col-md-6 img-container text-center">
+              <img src="resources/images/LSTM2 initial.jpeg" class="img-fluid" alt="Model B, LSTM Initial Results" />
+              <p>LSTM Initial</p>
+            </div>
+            <div class="col-md-6 img-container text-center">
+              <img src="resources/images/LSTM2 cbow.jpeg" class="img-fluid" alt="Model B, LSTM with CBOW Embedding" />
+              <p>LSTM with CBOW Embedding</p>
+            </div>
+            <div class="col-md-6 img-container text-center">
+              <img src="resources/images/LSTM2 cbow and aug.jpeg" class="img-fluid"
+                alt="Model B, LSTM with CBOW and Data Augmentation" />
+              <p>LSTM with CBOW and Data Augmentation</p>
+            </div>
+            <div class="col-md-6 img-container text-center">
+              <img src="resources/images/LSTM2 aug attention.jpeg" class="img-fluid"
+                alt="Model B, LSTM with Data Augmentation and Attention" />
+              <p>LSTM with Data Augmentation and Attention</p>
+            </div>
+          </div>
+
+
+    
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 text-left">
+          <h2 class="mt-5">Comparison with Original Model and State of the Art</h2>
+          <p>Through strategic data augmentation we have enhanced the quality of our dataset, 
+          leading to a notable performance boost in our models. Our refined approach along with 
+          hyperparameters tuning resulted in a commendable accuracy of 82.40% 
+          with the CNN architecture in model B, surpassing the state-of-the-art results, which peaked at 75.21%.</p>
+          <p> <b>Note:</b> our improvements where mainly because of the Embedding Model and the Data Augmentation techniques, 
+            so there is no new diagrams from the model Architectures.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 text-left">
+          <h2 class="mt-5">Technical report</h2>
+
+          <p>
+            Here are the details for the CNN model that got us the best results.
+          </p>
+
+          <ul>
+            <li>Programming framework: Keras</li>
+            <li>Training hardware: Google Colab T4 GPU</li>
+            <li>Training time: 10 mins </li>
+            <li>Number of epochs: 20</li>
+            <li>Time per epoch: 30 seconds</li>
+            <li>Any other important detail or difficulties: 
+                <ul>
+                  <li>The Limited Quota of GPU power available in Google Colab</li>
+                  <li>The time it takes to train the model</li>
+                  <li>The slow internet connection in Egypt</li>
+                </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 text-left">
+          <h2 class="mt-5">Conclusion</h2>
+
+          <p>
+            Conclusion and future work (including lessons learned and
+            interesting findings
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 text-left">
+          <h2 class="mt-5">References</h2>
+
+          <p>List all references here, the following are only examples</p>
+
+          <ol>
+            <li><a href="http://www.google.com">Problem statement url</a></li>
+            <li><a href="http://www.google.com">Dataset URL</a></li>
+            <li><a href="http://www.google.com">Model Reference URL</a></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="../vendor/jquery/jquery.slim.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
